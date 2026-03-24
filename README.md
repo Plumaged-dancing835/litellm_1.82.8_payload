@@ -15,7 +15,7 @@ Defanged copies of the litellm 1.82.8 supply chain attack stages. Attacker-contr
 
 Only attacker-controlled infrastructure is defanged. Legitimate services the malware targets (AWS IMDS, K8s API, Slack, Discord, YouTube, amazonaws.com) are left intact since they are not malicious endpoints.
 
-| Original (malicious) | Defanged | Role |
-|----------------------|----------|------|
-| `https://models.litellm.cloud/` | `hXXps://models[.]litellm[.]cloud/` | Credential exfiltration endpoint |
-| `https://checkmarx.zone/raw` | `hXXps://checkmarx[.]zone/raw` | C2 polling endpoint |
+| Defanged | Role |
+|----------|------|
+| `hXXps://models[.]litellm[.]cloud/` | Credential exfiltration endpoint |
+| `hXXps://checkmarx[.]zone/raw` | C2 polling endpoint |
